@@ -1,4 +1,4 @@
-import 'package:desafio_bemol/app/core/ui/colors_app/colors_app.dart';
+import 'package:desafio_bemol/app/core/ui/styles/colors_app.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 

@@ -16,11 +16,20 @@ class HomeController extends Cubit<HomeState> {
       List<ProductModel> listaProdutos =
           await _productRepository.getAllProducts();
       emit(state.copyWith(
-          status: HomeStateStatus.loaded, listaProdutos: listaProdutos));
+          status: HomeStateStatus.loaded,
+          listaProdutos: listaProdutos,
+          filterProdutos: listaProdutos));
     } on RepositoryExceptions catch (e, s) {
       log('erro buscar produtos', error: e, stackTrace: s);
       emit(state.copyWith(
           status: HomeStateStatus.error, errorMessage: e.message));
     }
+  }
+
+  runFilter(List<ProductModel> listaProdutos, String keyword) {
+    List<ProductModel> filterProdutos =
+        _productRepository.runFilter(listaProdutos, keyword);
+    emit(state.copyWith(
+        status: HomeStateStatus.loaded, filterProdutos: filterProdutos));
   }
 }

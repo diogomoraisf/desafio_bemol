@@ -1,4 +1,5 @@
 import 'package:desafio_bemol/app/core/provider/aplication_binding.dart';
+import 'package:desafio_bemol/app/pages/error/error_router.dart';
 import 'package:desafio_bemol/app/pages/home/home_router.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,10 @@ class DesafioBemol extends StatelessWidget {
       title: 'Products',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      routes: {'/': (context) => HomeRouter.page},
+      routes: {
+        '/': (context) => HomeRouter.page,
+        'error': (context) => ErrorRouter.page
+      },
     ));
   }
 }

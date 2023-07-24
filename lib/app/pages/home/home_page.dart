@@ -1,6 +1,12 @@
 import 'package:desafio_bemol/app/core/ui/base_state/base_state.dart';
+import 'package:desafio_bemol/app/core/widgets/custom_app_bar.dart';
+import 'package:desafio_bemol/app/core/widgets/info_message.dart';
+import 'package:desafio_bemol/app/core/widgets/list_empty.dart';
+import 'package:desafio_bemol/app/pages/error/error_router.dart';
 import 'package:desafio_bemol/app/pages/home/home_controller.dart';
 import 'package:desafio_bemol/app/pages/home/home_state.dart';
+import 'package:desafio_bemol/app/pages/home/widgets/custom_search_bar.dart';
+import 'package:desafio_bemol/app/pages/home/widgets/list_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,8 +26,21 @@ class _HomePageState extends BaseState<HomePage, HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Products'),
+      appBar: CustomAppBar(
+        title: 'Produtos',
+        hideBackButton: true,
+        menuItem: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.favorite_border,
+                  size: 24,
+                  color: Colors.black,
+                )),
+          )
+        ],
       ),
       body: BlocConsumer<HomeController, HomeState>(
         listener: (context, state) {
@@ -30,24 +49,35 @@ class _HomePageState extends BaseState<HomePage, HomeController> {
             loading: () => showLoader(),
             error: () {
               hideLoader();
-              showError(state.errorMessage ??
-                  'Erro inesperado. Tente novamente mais tarde');
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('error', (route) => false);
             },
           );
         },
         builder: (context, state) {
-          return Center(
-            child: state.listaProdutos.isNotEmpty
-                ? ListView.builder(
-                    itemCount: state.listaProdutos.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(
-                        '${state.listaProdutos[index].title}',
-                        style: const TextStyle(color: Colors.black),
-                      );
-                    },
-                  )
-                : Container(),
+          return Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CustomSearchBar(),
+              ),
+              state.status.name != 'loading'
+                  ? state.filterProdutos.isEmpty
+                      ? const Expanded(
+                          child: ListEmpty(
+                              infoMessage:
+                                  'Nenhum produto encontrado.\n Refine a sua busca.'),
+                        )
+                      : Expanded(
+                          child: SingleChildScrollView(
+                            child: state.listaProdutos.isNotEmpty
+                                ? ListProducts(
+                                    listaProdutos: state.filterProdutos)
+                                : null,
+                          ),
+                        )
+                  : const InfoMessage(message: 'Carregando produtos..')
+            ],
           );
         },
       ),

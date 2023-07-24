@@ -15,7 +15,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<List<ProductModel>> getAllProducts() async {
     try {
-      final result = await dio.get('/products?limit=4');
+      final result = await dio.get('/products?limit=3');
       return result.data
           .map<ProductModel>(
             (p) => ProductModel.fromMap(p),
@@ -32,5 +32,20 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<ProductModel> getProduct(int id) {
     // TODO: implement getProduct
     throw UnimplementedError();
+  }
+
+  @override
+  List<ProductModel> runFilter(
+      List<ProductModel> listaProdutos, String keyword) {
+    List<ProductModel> result = [];
+    if (keyword.isEmpty) {
+      result = listaProdutos;
+    } else {
+      result = listaProdutos
+          .where((produto) =>
+              produto.title!.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
+    return result;
   }
 }
