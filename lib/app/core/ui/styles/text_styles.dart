@@ -19,6 +19,13 @@ class TextStyles {
       letterSpacing: 0.6,
       fontFamily: font);
 
+  TextStyle get baseTitleProduct => TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 20,
+      fontStyle: FontStyle.normal,
+      color: Colors.black,
+      fontFamily: font);
+
   TextStyle get baseDescription => TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 16,

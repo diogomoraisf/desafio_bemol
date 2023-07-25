@@ -15,7 +15,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<List<ProductModel>> getAllProducts() async {
     try {
-      final result = await dio.get('/products?limit=3');
+      final result = await dio.get('/products?limit=10');
       return result.data
           .map<ProductModel>(
             (p) => ProductModel.fromMap(p),
@@ -29,9 +29,15 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<ProductModel> getProduct(int id) {
-    // TODO: implement getProduct
-    throw UnimplementedError();
+  Future<ProductModel> getProduct(int idProduto) async {
+    try {
+      final result = await dio.get('/products/$idProduto');
+      return ProductModel.fromMap(result.data);
+    } on DioException catch (e, s) {
+      log('Erro ao buscar single produto', error: e, stackTrace: s);
+      throw RepositoryExceptions(
+          message: 'Erro ao carregar produto. Tente novamente mais tarde');
+    }
   }
 
   @override

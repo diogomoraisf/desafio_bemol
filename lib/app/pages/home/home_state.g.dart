@@ -11,6 +11,8 @@ extension HomeStateStatusMatch on HomeStateStatus {
       {required T Function() initial,
       required T Function() loading,
       required T Function() loaded,
+      required T Function() favoriting,
+      required T Function() favorited,
       required T Function() error}) {
     final v = this;
     if (v == HomeStateStatus.initial) {
@@ -25,6 +27,14 @@ extension HomeStateStatusMatch on HomeStateStatus {
       return loaded();
     }
 
+    if (v == HomeStateStatus.favoriting) {
+      return favoriting();
+    }
+
+    if (v == HomeStateStatus.favorited) {
+      return favorited();
+    }
+
     if (v == HomeStateStatus.error) {
       return error();
     }
@@ -37,6 +47,8 @@ extension HomeStateStatusMatch on HomeStateStatus {
       T Function()? initial,
       T Function()? loading,
       T Function()? loaded,
+      T Function()? favoriting,
+      T Function()? favorited,
       T Function()? error}) {
     final v = this;
     if (v == HomeStateStatus.initial && initial != null) {
@@ -49,6 +61,14 @@ extension HomeStateStatusMatch on HomeStateStatus {
 
     if (v == HomeStateStatus.loaded && loaded != null) {
       return loaded();
+    }
+
+    if (v == HomeStateStatus.favoriting && favoriting != null) {
+      return favoriting();
+    }
+
+    if (v == HomeStateStatus.favorited && favorited != null) {
+      return favorited();
     }
 
     if (v == HomeStateStatus.error && error != null) {

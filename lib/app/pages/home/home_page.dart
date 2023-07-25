@@ -2,7 +2,6 @@ import 'package:desafio_bemol/app/core/ui/base_state/base_state.dart';
 import 'package:desafio_bemol/app/core/widgets/custom_app_bar.dart';
 import 'package:desafio_bemol/app/core/widgets/info_message.dart';
 import 'package:desafio_bemol/app/core/widgets/list_empty.dart';
-import 'package:desafio_bemol/app/pages/error/error_router.dart';
 import 'package:desafio_bemol/app/pages/home/home_controller.dart';
 import 'package:desafio_bemol/app/pages/home/home_state.dart';
 import 'package:desafio_bemol/app/pages/home/widgets/custom_search_bar.dart';
@@ -33,7 +32,14 @@ class _HomePageState extends BaseState<HomePage, HomeController> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.state.listaProdutos.isNotEmpty
+                      ? Navigator.of(context).pushNamed('favorites',
+                          arguments: {
+                              'listaProdutos': controller.state.listaProdutos
+                            })
+                      : null;
+                },
                 icon: const Icon(
                   Icons.favorite_border,
                   size: 24,
@@ -71,12 +77,21 @@ class _HomePageState extends BaseState<HomePage, HomeController> {
                       : Expanded(
                           child: SingleChildScrollView(
                             child: state.listaProdutos.isNotEmpty
-                                ? ListProducts(
-                                    listaProdutos: state.filterProdutos)
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 25.0),
+                                    child: ListProducts(
+                                      listaProdutos: state.filterProdutos,
+                                      favoriteList: state.favoriteList,
+                                    ),
+                                  )
                                 : null,
                           ),
                         )
-                  : const InfoMessage(message: 'Carregando produtos..')
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child:
+                          const InfoMessage(message: 'Carregando produtos..'))
             ],
           );
         },
