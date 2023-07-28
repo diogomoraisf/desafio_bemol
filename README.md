@@ -19,10 +19,10 @@ Construir um aplicativo em Flutter que exiba uma lista de produtos e seus detalh
 produto.
 4. Incluir um ícone de coração que permita ao usuário marcar/desmarcar o produto como favorito.
 #### Barra de Pesquisa
-i. A pesquisa deve atualizar a lista de produtos em tempo real conforme o usuário digitar.
-ii. A pesquisa não deve diferenciar letras maiúsculas de minúsculas.
-iii. A pesquisa não deve ser apagada quando o usuário navega da tela inicial e retornar.
-### Tela de Detalhes do Produto
+1. A pesquisa deve atualizar a lista de produtos em tempo real conforme o usuário digitar.
+2. A pesquisa não deve diferenciar letras maiúsculas de minúsculas.
+3. A pesquisa não deve ser apagada quando o usuário navega da tela inicial e retornar.
+#### Tela de Detalhes do Produto
 1. Mostrar informações adicionais sobre um produto selecionado, incluindo nome, preço,
 classificação de avaliações, quantidade de avaliações, descrição, categoria e imagem.
 2. Incluir um ícone de coração que permita ao usuário marcar/desmarcar o produto como favorito.
