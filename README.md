@@ -12,13 +12,13 @@ Construir um aplicativo em Flutter que exiba uma lista de produtos e seus detalh
 
 ## Requisitos
 
-### Tela Inicial
+#### Tela Inicial
 1. Deve exibir a lista de produtos.
 2. Permitir que o usuário pesquise os produtos por nome.
 3. Exibir o nome, preço, classificação de avaliações, quantidade de avaliações e imagem de cada
 produto.
 4. Incluir um ícone de coração que permita ao usuário marcar/desmarcar o produto como favorito.
-### Barra de Pesquisa
+#### Barra de Pesquisa
 i. A pesquisa deve atualizar a lista de produtos em tempo real conforme o usuário digitar.
 ii. A pesquisa não deve diferenciar letras maiúsculas de minúsculas.
 iii. A pesquisa não deve ser apagada quando o usuário navega da tela inicial e retornar.
