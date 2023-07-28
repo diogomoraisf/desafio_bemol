@@ -16,4 +16,5 @@ class ColorsApp {
   Color get linkColor => const Color.fromRGBO(51, 102, 204, 1);
   Color get ratingColor => const Color.fromRGBO(255, 215, 0, 1);
   Color get favoriteColor => const Color.fromRGBO(255, 0, 0, 1);
+  Color get priceSingle => const Color.fromRGBO(94, 196, 1, 1);
 }

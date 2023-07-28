@@ -8,7 +8,7 @@ import 'package:desafio_bemol/app/repository/product_repository.dart';
 import 'package:dio/dio.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
-  final CustomDio dio;
+  CustomDio dio;
   ProductRepositoryImpl({
     required this.dio,
   });

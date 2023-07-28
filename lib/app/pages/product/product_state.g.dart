@@ -11,6 +11,8 @@ extension ProductStateStatusMatch on ProductStateStatus {
       {required T Function() initial,
       required T Function() loading,
       required T Function() loaded,
+      required T Function() favoriting,
+      required T Function() favorited,
       required T Function() error}) {
     final v = this;
     if (v == ProductStateStatus.initial) {
@@ -23,6 +25,14 @@ extension ProductStateStatusMatch on ProductStateStatus {
 
     if (v == ProductStateStatus.loaded) {
       return loaded();
+    }
+
+    if (v == ProductStateStatus.favoriting) {
+      return favoriting();
+    }
+
+    if (v == ProductStateStatus.favorited) {
+      return favorited();
     }
 
     if (v == ProductStateStatus.error) {
@@ -38,6 +48,8 @@ extension ProductStateStatusMatch on ProductStateStatus {
       T Function()? initial,
       T Function()? loading,
       T Function()? loaded,
+      T Function()? favoriting,
+      T Function()? favorited,
       T Function()? error}) {
     final v = this;
     if (v == ProductStateStatus.initial && initial != null) {
@@ -50,6 +62,14 @@ extension ProductStateStatusMatch on ProductStateStatus {
 
     if (v == ProductStateStatus.loaded && loaded != null) {
       return loaded();
+    }
+
+    if (v == ProductStateStatus.favoriting && favoriting != null) {
+      return favoriting();
+    }
+
+    if (v == ProductStateStatus.favorited && favorited != null) {
+      return favorited();
     }
 
     if (v == ProductStateStatus.error && error != null) {

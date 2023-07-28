@@ -7,19 +7,26 @@ import 'package:desafio_bemol/app/pages/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductItem extends StatelessWidget {
+class ProductItem extends StatefulWidget {
   final ProductModel product;
   final bool isHomePage;
   const ProductItem(
       {super.key, required this.product, required this.isHomePage});
 
   @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
+  @override
   Widget build(BuildContext context) {
     HomeController controller = context.read<HomeController>();
+
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context)
-            .pushNamed('product', arguments: {'idProduto': product.id});
+      onTap: () async {
+        await Navigator.pushNamed(context, 'product',
+            arguments: {'idProduto': widget.product.id}).then((value) async {});
+        await controller.updateFavorite();
       },
       child: Container(
         constraints: const BoxConstraints(maxHeight: 140),
@@ -33,21 +40,24 @@ class ProductItem extends StatelessWidget {
                 constraints: const BoxConstraints(maxHeight: 130),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20.0),
-                  child: Image.network(
-                    product.image!,
-                    fit: BoxFit.contain,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
+                  child: Hero(
+                    tag: widget.product.id!,
+                    child: Image.network(
+                      widget.product.image!,
+                      fit: BoxFit.contain,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -57,15 +67,15 @@ class ProductItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.55,
                       child: AutoSizeText(
-                        '${product.title}',
+                        '${widget.product.title}',
                         maxLines: 2,
                         style: TextStyles.instance.baseDescription,
                       ),
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.55,
                       child: Row(
                         children: [
                           Padding(
@@ -77,15 +87,15 @@ class ProductItem extends StatelessWidget {
                             ),
                           ),
                           AutoSizeText(
-                            '${product.rating!.rate} ',
-                            style: const TextStyle(color: Colors.black54),
+                            '${widget.product.rating!.rate} ',
+                            style: TextStyles.instance.baseRating,
                           ),
                           AutoSizeText(
-                            '(${product.rating!.count} reviews)',
-                            style: const TextStyle(color: Colors.black54),
+                            '(${widget.product.rating!.count} reviews)',
+                            style: TextStyles.instance.baseRating,
                           ),
                           Visibility(
-                            visible: isHomePage,
+                            visible: widget.isHomePage,
                             child: Expanded(
                               child: BlocBuilder<HomeController, HomeState>(
                                 builder: (context, state) {
@@ -99,17 +109,18 @@ class ProductItem extends StatelessWidget {
                                         constraints: const BoxConstraints(),
                                         onPressed: () {
                                           controller.addFavorite(
-                                              product.id!, state.favoriteList);
+                                              widget.product.id!,
+                                              state.favoriteList);
                                         },
                                         icon: Icon(
                                           state.favoriteList.contains(
-                                                  product.id.toString())
+                                                  widget.product.id.toString())
                                               ? Icons.favorite
                                               : Icons.favorite_border,
                                           size: 24,
                                         ),
-                                        color: state.favoriteList
-                                                .contains(product.id.toString())
+                                        color: state.favoriteList.contains(
+                                                widget.product.id.toString())
                                             ? ColorsApp.instance.favoriteColor
                                             : ColorsApp.instance.blackNormal,
                                       ),
@@ -123,9 +134,9 @@ class ProductItem extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.55,
                       child: AutoSizeText(
-                        'R\$${product.price!.toStringAsFixed(2)}',
+                        'R\$${widget.product.price!.toStringAsFixed(2)}',
                         style: TextStyles.instance.basePrice,
                       ),
                     )

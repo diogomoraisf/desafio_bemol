@@ -46,4 +46,11 @@ class HomeController extends Cubit<HomeState> {
     emit(state.copyWith(
         status: HomeStateStatus.favorited, favoriteList: favoriteList));
   }
+
+  Future<void> updateFavorite() async {
+    emit(state.copyWith(status: HomeStateStatus.favoriting));
+    List<String> favoriteList = prefs.getStringList('favoriteList') ?? [];
+    emit(state.copyWith(
+        status: HomeStateStatus.favorited, favoriteList: favoriteList));
+  }
 }

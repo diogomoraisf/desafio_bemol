@@ -59,6 +59,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   match_generator: ^0.4.2
+  mockito: ^5.4.2
 
 
 # For information on the generic Dart part of this file, see the

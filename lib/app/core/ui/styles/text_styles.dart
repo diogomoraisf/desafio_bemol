@@ -59,10 +59,17 @@ class TextStyles {
       color: ColorsApp.instance.corPrimaria,
       fontFamily: font);
 
+  TextStyle get basePriceSingle => TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 27,
+      fontStyle: FontStyle.normal,
+      color: ColorsApp.instance.priceSingle,
+      fontFamily: font);
+
   TextStyle get baseRating => TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 14,
       fontStyle: FontStyle.normal,
-      color: ColorsApp.instance.blackNormal,
+      color: ColorsApp.instance.blackNormal.withOpacity(0.65),
       fontFamily: font);
 }
